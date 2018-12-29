@@ -6,7 +6,6 @@ class Id_checker():
         self.data = data
         self.double_occurences = 0
         self.triple_occurences = 0
-        self.answer = self.double_occurences * self.triple_occurences
 
     def count_multiple_occurences(self, id):
         letter_appearing_twice = False
