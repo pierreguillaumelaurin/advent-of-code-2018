@@ -16,7 +16,6 @@ class Id_checker():
                 self.double_occurences += 1
             if 3 in counter.values():
                 self.triple_occurences += 1
-            
 
     def answer_part_one(self):
         self.checksum()
