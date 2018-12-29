@@ -27,7 +27,7 @@ class Id_checker():
 
     def answer_part_one(self):
         self.checksum()
-        print(self.double_occurences * self.triple_occurences)
+        return self.double_occurences * self.triple_occurences
 
 id_checker = Id_checker(data)
-id_checker.answer_part_one()
+print(id_checker.answer_part_one())
