@@ -1,3 +1,5 @@
+from collections import Counter
+
 with open("../input/input.txt", "r") as input:
     data = input.readlines()
 
@@ -7,23 +9,14 @@ class Id_checker():
         self.double_occurences = 0
         self.triple_occurences = 0
 
-    def count_multiple_occurences(self, id):
-        letter_appearing_two_times = False
-        letter_appearing_three_times = False
-        for l in set(id):
-            if id.count(l) == 2:
-                letter_appearing_two_times = True
-            elif id.count(l) == 3:
-                letter_appearing_three_times = True
-        if letter_appearing_two_times:
-            self.double_occurences += 1
-        if letter_appearing_three_times:
-            self.triple_occurences += 1
-
     def checksum(self):
         for id in self.data:
-            if len(id) != len(set(id)):
-                self.count_multiple_occurences(id)
+            counter = Counter(id)
+            if 2 in counter.values():
+                self.double_occurences += 1
+            if 3 in counter.values():
+                self.triple_occurences += 1
+            
 
     def answer_part_one(self):
         self.checksum()
