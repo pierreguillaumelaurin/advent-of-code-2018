@@ -11,9 +11,9 @@ class Prototype_Finder():
         separator = 1
         while separator != len(self.data)-1:
             substrings = (id[:separator]+ id[separator+1:] for id in data)
-            counts = Counter(substrings)
-            if 2 in counts.values():
-                answer = list(counts.keys())[list(counts.values()).index(2)]
+            id_counts = Counter(substrings)
+            if 2 in id_counts.values():
+                answer = list(id_counts.keys())[list(id_counts.values()).index(2)]
                 return (answer)
             separator += 1
 

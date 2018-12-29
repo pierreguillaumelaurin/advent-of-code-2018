@@ -21,5 +21,6 @@ class Id_checker():
         self.checksum()
         return self.double_occurences * self.triple_occurences
 
-id_checker = Id_checker(data)
-print(id_checker.answer_part_one())
+if __name__ == "__main__":
+    id_checker = Id_checker(data)
+    print(id_checker.answer_part_one())
