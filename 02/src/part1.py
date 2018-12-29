@@ -8,14 +8,14 @@ class Id_checker():
         self.triple_occurences = 0
 
     def count_multiple_occurences(self, id):
-        letter_appearing_twice = False
+        letter_appearing_two_times = False
         letter_appearing_three_times = False
         for l in set(id):
             if id.count(l) == 2:
-                letter_appearing_twice = True
+                letter_appearing_two_times = True
             elif id.count(l) == 3:
                 letter_appearing_three_times = True
-        if letter_appearing_twice:
+        if letter_appearing_two_times:
             self.double_occurences += 1
         if letter_appearing_three_times:
             self.triple_occurences += 1
