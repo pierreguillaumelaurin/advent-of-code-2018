@@ -19,6 +19,8 @@ class Claim():
         self.top_height_offset = self.get_top_height_offset()
         self.width = self.get_width()
         self.height = self.get_height()
+        self.upper_left_corner = self.get_upper_left_corner()
+        self.lower_right_corner = self.get_lower_right_corner()
         
     
     def get_id(self):
@@ -41,6 +43,14 @@ class Claim():
         match = re.search('x(.*)$', self.claim)
         return int(match.group(1))
 
+    def get_upper_left_corner(self):
+        return (self.left_width_offset,self.top_height_offset)
+    
+    def get_lower_right_corner(self):
+        return (self.left_width_offset + self.width,
+                self.top_height_offset + self.height)
+
+    
 if __name__ == "__main__":
     test_data = data[0]
     test_claim = Claim(test_data)
@@ -50,3 +60,5 @@ if __name__ == "__main__":
     assert(test_claim.top_height_offset == 196)
     assert(test_claim.width == 19)
     assert(test_claim.height == 14)
+    assert(test_claim.upper_left_corner == (146, 196))
+    assert(test_claim.lower_right_corner == (165, 210))
