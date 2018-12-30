@@ -6,7 +6,7 @@ with open("../input/input.txt", "r") as input:
 class Claim_manager():
     def __init__(self, data):
         self.data = data
-        self.claim_overlaps = 0
+        self.claims = (Claim(line) for line in data)
     
     #def find_claim_overlaps(self):
 
@@ -14,29 +14,30 @@ class Claim_manager():
 class Claim():
     def __init__(self, claim):
         self.claim = claim
-        self.id = self.set_id()
-        self.left_width_offset = self.set_left_width_offset()
-        self.top_height_offset = self.set_top_height_offset()
-        self.width = self.set_width()
-        self.height = self.set_height()
+        self.id = self.get_id()
+        self.left_width_offset = self.get_left_width_offset()
+        self.top_height_offset = self.get_top_height_offset()
+        self.width = self.get_width()
+        self.height = self.get_height()
+        
     
-    def set_id(self):
+    def get_id(self):
         match = re.search('#(.*) @', self.claim)
         return int(match.group(1))
     
-    def set_left_width_offset(self):
+    def get_left_width_offset(self):
         match = re.search('@ (.*),', self.claim)
         return int(match.group(1))
     
-    def set_top_height_offset(self):
+    def get_top_height_offset(self):
         match = re.search(',(.*):', self.claim)
         return int(match.group(1))
     
-    def set_width(self):
+    def get_width(self):
         match = re.search(': (.*)x', self.claim)
         return int(match.group(1))
     
-    def set_height(self):
+    def get_height(self):
         match = re.search('x(.*)$', self.claim)
         return int(match.group(1))
 
