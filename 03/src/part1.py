@@ -20,7 +20,9 @@ class Claim():
         self.width = self.get_width()
         self.height = self.get_height()
         self.upper_left_corner = self.get_upper_left_corner()
+        self.upper_right_corner = self.get_upper_right_corner()
         self.lower_right_corner = self.get_lower_right_corner()
+        self.lower_left_corner = self.get_lower_left_corner()
         
     
     def get_id(self):
@@ -45,10 +47,16 @@ class Claim():
 
     def get_upper_left_corner(self):
         return (self.left_width_offset,self.top_height_offset)
+
+    def get_upper_right_corner(self):
+        return (self.left_width_offset+self.width, self.top_height_offset)
     
     def get_lower_right_corner(self):
         return (self.left_width_offset + self.width,
                 self.top_height_offset + self.height)
+
+    def get_lower_left_corner(self):
+        return (self.left_width_offset, self.top_height_offset + self.height)
 
     
 if __name__ == "__main__":
@@ -62,3 +70,5 @@ if __name__ == "__main__":
     assert(test_claim.height == 14)
     assert(test_claim.upper_left_corner == (146, 196))
     assert(test_claim.lower_right_corner == (165, 210))
+    assert(test_claim.upper_right_corner == (165, 196))
+    assert(test_claim.lower_left_corner == (165, 196))
