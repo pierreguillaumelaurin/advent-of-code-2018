@@ -33,27 +33,35 @@ def get_id(line):
     match = re.search(r'#(\d+) ', line)
     guard_id = match.group(1)
     return guard_id
-    
-def get_minutes_slept(day):
-    minutes_slept = 0
+
+def get_times_falling_asleep(day):
     times_falling_asleep = []
-    times_waking_up = []
-    date_format = '%H:%M'
     for event in day:
         if "falls asleep" in event:
             match = re.search(r' (\d+:\d+)]', event)
             time = match.group(1)
             times_falling_asleep.append(time)
-        elif "wakes up" in event:
+    return times_falling_asleep
+
+def get_times_waking_up(day):
+    times_waking_up = []
+    for event in day:
+        if "wakes up" in event:
             match = re.search(r' (\d+:\d+)]', event)
             time = match.group(1)
             times_waking_up.append(time)
-    minutes_slept = []
+    return times_waking_up
+
+def get_minutes_slept(day):
+    minutes_slept = 0
+    times_falling_asleep = get_times_falling_asleep(day)
+    times_waking_up = get_times_waking_up(day)
+    date_format = '%H:%M'
     for time_falling_asleep, time_waking_up in zip(times_falling_asleep, times_waking_up):
         time_difference = datetime.datetime.strptime(time_waking_up, date_format) - datetime.datetime.strptime(time_falling_asleep, date_format)
         difference_in_minutes = int(time_difference.total_seconds()/60)
-        minutes_slept.append(difference_in_minutes)
-    return sum(minutes_slept)
+        minutes_slept += difference_in_minutes
+    return minutes_slept
 
 initialize_sleep_log(schedule, sleep_log)
 
