@@ -5,45 +5,6 @@ import datetime
 sys.path.insert(0, '../util')
 from utils import multiline_input
 
-def initialize_sleep_log(data, sleep_log):
-    for event in data:
-        if ("#" in event):
-            key = get_id(event)
-            sleep_log[key] = 0
-
-def get_times_falling_asleep(day):
-    times_falling_asleep = []
-    date_format = '%H:%M'
-    for event in day:
-        if "falls asleep" in event:
-            match = re.search(r' (\d+:\d+)]', event)
-            time = match.group(1)
-            time = datetime.datetime.strptime(time, date_format)
-            times_falling_asleep.append(time)
-    return times_falling_asleep
-
-def get_times_waking_up(day):
-    times_waking_up = []
-    date_format = '%H:%M'
-    for event in day:
-        if "wakes up" in event:
-            match = re.search(r' (\d+:\d+)]', event)
-            time = match.group(1)
-            time = datetime.datetime.strptime(time, date_format)
-            times_waking_up.append(time)
-    return times_waking_up
-
-def fill_log(daily_schedule, sleep_log):
-    for day in daily_schedule:
-        line_with_id = day[0]
-        guard_id = get_id(line_with_id)
-        a = get_minutes_slept(day)
-        sleep_log[guard_id] += get_minutes_slept(day)
-    return sleep_log
-
-def find_biggest_sleeper(sleep_log):
-    return max(sleep_log, key= sleep_log.get)
-
 class Timetable():
     def __init__(self, data):
         self.data = data
