@@ -17,6 +17,7 @@ class Claim():
         digits = int(matches[i])
         return digits
 
+
 class Fabric():
     def __init__(self, length, data):
         self.length = length
