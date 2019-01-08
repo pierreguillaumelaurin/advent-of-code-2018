@@ -28,18 +28,18 @@ class Timetable():
     
     def populate(self):
         daytables = list(self.split_by_day(self.data))
-        for i in range(0, len(self.matrix)-2):
+        for i in range(0, len(self.matrix)-1):
             marker = "."
-            for y in range(2,62):
-                time = y-2
+            for y in range(0,60):
+                time = y
                 minute_log = ":{0:0=2d}".format(time)
                 events = [event for event in daytables[i]]
                 if [event for event in events if minute_log in event]:
                     if [event for event in events if minute_log + "] falls asleep" in event]:
                         marker = "#"
-                    elif [event for event in events if minute_log + "] wakes up" in events]:
+                    elif [event for event in events if minute_log + "] wakes up" in event]:
                         marker = "."
-                self.matrix[i+2][y] = marker
+                self.matrix[i+1][y+2] = marker
     
     def get_minutes_slept(self):
         minutes_slept = {}
@@ -95,6 +95,7 @@ class Timetable():
                 day_log = [line]
             else:
                 day_log.append(line)
+        yield day_log
 
 if __name__ == "__main__":
     data = multiline_input()
