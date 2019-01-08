@@ -8,11 +8,16 @@ from utils import multiline_input
 class Timetable():
     def __init__(self, data):
         self.data = data
-        self.matrix = []
+        self.matrix = self.initialize()
+        self.populate()
+        self.minutes_slept = self.get_minutes_slept()
+    
+    def initialize(self):
+        matrix = []
         first_row = []
         for i in range(-2,60):
             first_row.append(i)
-        self.matrix.append(first_row)
+        matrix.append(first_row)
         for line in self.data:
             if "#" in line:
                 row = []
@@ -22,10 +27,9 @@ class Timetable():
                 row.append(guard_id)
                 for column in range(0, 60):
                     row.append(".")
-                self.matrix.append(row)
-        self.populate()
-        self.minutes_slept = self.get_minutes_slept()
-    
+                matrix.append(row)
+        return matrix
+
     def populate(self):
         daytables = list(self.split_by_day(self.data))
         for i in range(0, len(self.matrix)-1):
