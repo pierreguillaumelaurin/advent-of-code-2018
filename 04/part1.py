@@ -47,10 +47,11 @@ class Timetable():
     
     def get_minutes_slept(self):
         minutes_slept = {}
-        for row in self.matrix:
+        matrix_without_header = self.matrix[1:]
+        for row in matrix_without_header:
             guard_id = row[1]
             minutes_slept[guard_id] = 0
-        for row in self.matrix:
+        for row in matrix_without_header:
             guard_id = row[1]
             minutes_slept[guard_id] += row.count("#")
         return minutes_slept
@@ -60,14 +61,38 @@ class Timetable():
         minute_slept_the_most = self.get_minute_spent_asleep_the_most(biggest_sleeper)
         return int(biggest_sleeper) * minute_slept_the_most
     
+    def solve_part_2(self):
+        sleep_log = self.get_minutes_slept()
+        guard_info = {"id": 0, "minute": 0, "occurence": 0}
+        matrix_without_header = self.matrix[1:]
+        for row in matrix_without_header:
+            guard_id = row[1]
+            minute = self.get_minute_spent_asleep_the_most(guard_id)
+            occurence = self.count_occurences_on_minutes(guard_id, minute)
+            if (occurence > guard_info["occurence"]):
+                guard_info["occurence"] = occurence
+                guard_info["minute"] = minute
+                guard_info["id"] = guard_id
+        return int(guard_info["id"])*guard_info["minute"]
+    
+    def count_occurences_on_minutes(self, guard_id, minute):
+        counter = 0
+        matrix_without_header = self.matrix[1:]
+        for row in matrix_without_header:
+            if (row[1] == guard_id):
+                if (row[minute+2] == "#"):
+                       counter += 1
+        return counter
+
     def get_biggest_sleeper(self):
         return max(self.minutes_slept, key= self.minutes_slept.get)
 
     def get_minute_spent_asleep_the_most(self, guard_id):
         minutes_slept = {}
+        matrix_without_header = self.matrix[1:]
         for minute in range(0, 60):
             minutes_slept[minute] = 0
-        for row in self.matrix:
+        for row in matrix_without_header:
             if row[1] == guard_id:
                 for i in range(2, 62):
                     if row[i] == "#":
@@ -106,5 +131,4 @@ if __name__ == "__main__":
     data = data.split('\n')
     data.sort()
     a = Timetable(data)
-    a.get_minute_spent_asleep_the_most("2393")
     print(a.solve_part_1())
