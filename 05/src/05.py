@@ -1,5 +1,4 @@
 import re
-import string
 
 with open("../input/input.txt", "r") as input:
     data = input.read()
