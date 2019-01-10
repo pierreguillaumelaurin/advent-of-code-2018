@@ -9,22 +9,23 @@ class Polymer():
         self.units = data
 
     def react(self):
+        l = 0
         iterator = len(self.units) - 2
-        has_reaction = False
-        reactions = []
-        for l in range(0,iterator):
-            reaction_on_l = self.units[l] == self.units[l+1].upper() or self.units[l] == self.units[l+1].lower()
-            if (reaction_on_l):
-                units_involved = self.units[l] + self.units[l+1]
-                has_reaction = True
-                reactions.append(units_involved)
-        if has_reaction:
-            self.remove_reactions(reactions)
-            self.react()
-
-    def remove_reactions(self, reactions):
-        for reaction in reactions:
-            self.units = self.units.replace(reaction, "")
+        while l != iterator:
+            reaction_on_l = ord(self.units[l]) == ord(self.units[l+1]) + 32 or ord(self.units[l]) == ord(self.units[l+1]) - 32
+            had_reaction = False
+            while reaction_on_l:
+                    had_reaction = True
+                    units_involved = self.units[l] + self.units[l+1]
+                    past = self.units
+                    self.units = self.units.replace(units_involved, "", 1)
+                    print(units_involved)
+                    reaction_on_l = ord(self.units[l]) == ord(self.units[l+1]) + 32 or ord(self.units[l]) == ord(self.units[l+1]) - 32
+                    iterator = len(self.units) - 2
+            if had_reaction:
+                l -= 1
+            else:
+                l += 1
 
     def get_units_count(self):
         return len(self.units)
@@ -38,8 +39,12 @@ if __name__ == "__main__":
     a = Polymer("dabAcCaCBAcCcaDA")
     assert(a.get_units_count() == 16)
     a.react()
+    print(a.units)
     assert(a.units == "dabCBAcaDA")
     assert(a.get_units_count() == 10)
+    c = Polymer("dabAcCaCBAcCcaDABBxx")
+    c.react()
+    assert(c.units == "dabCBAcaDABBxx")
     b = Polymer(data)
     beginning = b.units
     print(b.solve_part_1())
