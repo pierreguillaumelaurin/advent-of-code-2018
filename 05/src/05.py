@@ -46,6 +46,8 @@ if __name__ == "__main__":
     c.react()
     assert(c.units == "dabCBAcaDABBxx")
     b = Polymer(data)
+    d = b.units
     beginning = b.units
     print(b.solve_part_1())
+    assert(d != b.units)
     print(b.units)
