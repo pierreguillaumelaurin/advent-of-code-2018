@@ -4,6 +4,8 @@ with open("../input/input.txt", "r") as input:
 class Polymer():
     def __init__(self, data):
         self.units = list(data)
+        self.react()
+        self.final_length = len(self.units)
 
     def react(self):
         i = 0
@@ -14,12 +16,19 @@ class Polymer():
             else:
                 i += 1
 
-    def get_units_count(self):
-        return len(self.units)
-
     def solve_part_1(self):
-        self.react()
-        return "The answer for part 1 is " + str(self.get_units_count()) + "."
+        return "The answer for part 1 is " + str(self.final_length) + "."
+    
+    def solve_part_2(self):
+        min_units = self.final_length
+        charcode = 65
+        while charcode < 91:
+            test_without_char = list(filter(lambda a: a != chr(charcode) and a != chr(charcode+32), self.units))
+            test_polymer = Polymer(test_without_char)
+            if test_polymer.final_length < min_units:
+                min_units = test_polymer.final_length
+            charcode += 1
+        return "The answer for part 2 is " + str(min_units) + "."
 
     @staticmethod
     def match(l, m):
@@ -45,4 +54,5 @@ if __name__ == "__main__":
     test("cAaaC", "caC")
 
     b = Polymer(data)
-    print(b.solve_part_1())    
+    print(b.solve_part_1())
+    print(b.solve_part_2())
