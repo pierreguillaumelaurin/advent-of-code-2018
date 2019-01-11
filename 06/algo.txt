@@ -1,4 +1,5 @@
 - creer la grille
 - placer les points dans la grille
+- trouver les points ayant une influence infinie
 - pour chaque carré, trouver la distance avec le point le plus proche (ne pas oublier d'implementer les .)
 - compter les lettres dans la grille, sans oublier les majuscules, et ramener la lettre ayant le plus grand point.
