@@ -16,21 +16,25 @@ class CoordinateTestCase(unittest.TestCase):
 
 class GridTestCase(unittest.TestCase):
     def setUp(self):
-        coordinates_list = ["0, 0","1, 1", "1, 0", "0, 2"]
+        coordinates_list = ["0, 0","3, 0", "0, 3", "3, 3"]
         self.test_grid = Grid(coordinates_list)
     
     def test_init(self):
-        self.assertEqual(self.test_grid.height, 2)
-        self.assertEqual(self.test_grid.width, 3)
+        self.assertEqual(self.test_grid.height, 4)
+        self.assertEqual(self.test_grid.width, 4)
 
     def test_create(self):
-        self.assertEqual(self.test_grid.grid, [["", "", ""],
-                                                    ["", "", ""]])
+        self.assertEqual(self.test_grid.grid, [["", "", "", ""],
+                                                    ["", "", "", ""],
+                                                    ["", "", "", ""],
+                                                    ["", "", "", ""]])
     
     def test_populate(self):
         self.test_grid.populate()
-        self.assertEqual(self.test_grid.grid, [["10", "", "13"],
-                                                   ["12", "11", ""]])
+        self.assertEqual(self.test_grid.grid, [["10", "", "", "12"],
+                                                    ["", "", "", ""],
+                                                    ["", "", "", ""],
+                                                    ["11", "", "", "13"]])
 
 
 if __name__ == "__main__":
