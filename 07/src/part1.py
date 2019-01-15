@@ -10,17 +10,14 @@ executed = []
 pipeline = []
 steps_not_executed = {}
 
-for line in lines:
-    steps_not_executed[line[7]] = []
-    steps_not_executed[line[1]] = []
+def populate_steps():
+    for line in lines:
+        steps_not_executed[line[7]] = []
+        steps_not_executed[line[1]] = []
 
-#assert(steps_not_executed == {"A": [], "B": [], "C": [], "D": [], "E": [], "F": []})
-
-for line in lines:
-    steps_not_executed[line[7]].append(line[1])
-
-#assert(steps_not_executed == {"A": ["C"], "B": ["A"], "C": [], "F": ["C"], "D": ["A"], "E": ["B", "D", "F"]})
-
+def add_preconditions():
+    for line in lines:
+        steps_not_executed[line[7]].append(line[1])
 
 def add_to_pipeline():
     to_delete = []
@@ -42,6 +39,8 @@ def update_precondition():
             value.remove(executed[-1])
 
 if __name__ == "__main__":
+    populate_steps()
+    add_preconditions()
     while steps_not_executed:
         add_to_pipeline()
         execute()
