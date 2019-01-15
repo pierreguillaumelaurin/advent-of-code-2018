@@ -2,45 +2,49 @@ import sys
 sys.path.insert(0, '../../util/')
 import utils
 
-with open("../input/test_input.txt", "r") as input:
+with open("../input/input.txt", "r") as input:
     data = input.readlines()
     lines = [line.split(" ") for line in data]
 
-available = []
 executed = []
+pipeline = []
+steps_not_executed = {}
 
-def find_root():
-    contingent_steps = []
-    for line in lines:
-            if line[7] not in available:
-                contingent_steps.append(line[7])
-    for line in lines:
-            if line[1] not in available:
-                return line[1]
+for line in lines:
+    steps_not_executed[line[7]] = []
+    steps_not_executed[line[1]] = []
 
-def find_available_steps():
-    for line in lines:
-            if line[1] not in available:
-                available.append(line[7])
-    for line in lines:
-        if line[7] in available and line[1] not in executed:
-            available.remove(line[7])
+#assert(steps_not_executed == {"A": [], "B": [], "C": [], "D": [], "E": [], "F": []})
 
-def execute_step():
-    available.sort()
-    step_to_execute = available[0]
-    available.remove(step_to_execute)
-    executed.append(step_to_execute)
+for line in lines:
+    steps_not_executed[line[7]].append(line[1])
 
+#assert(steps_not_executed == {"A": ["C"], "B": ["A"], "C": [], "F": ["C"], "D": ["A"], "E": ["B", "D", "F"]})
+
+
+def add_to_pipeline():
+    to_delete = []
+    for key, value in steps_not_executed.items():
+        if not value:
+            pipeline.append(key)
+            to_delete.append(key)
+    for key in to_delete:
+        del steps_not_executed[key]
+
+def execute():
+    pipeline.sort()
+    executed.append(pipeline[0])
+    pipeline.remove(pipeline[0])
+
+def update_precondition():
+    for value in steps_not_executed.values():
+        if executed[-1] in value:
+            value.remove(executed[-1])
 
 if __name__ == "__main__":
-    #assert(lines[0] == ["Step", "I", "must", "be", "finished", "before" ,"step" ,"G" ,"can" , "begin.\n"])
-    assert(find_root() == "C")
-    available.append(find_root())
-    while True:
-        find_available_steps()
-        execute_step()
-        if len(executed) == 6:
-            break
+    while steps_not_executed:
+        add_to_pipeline()
+        execute()
+        update_precondition()
     print("".join(executed))
 
