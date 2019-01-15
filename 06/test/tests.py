@@ -16,7 +16,7 @@ class CoordinateTestCase(unittest.TestCase):
 
 class GridTestCase(unittest.TestCase):
     def setUp(self):
-        coordinates_list = ["0, 0","3, 0", "0, 3", "3, 3"]
+        coordinates_list = ["0, 0","3, 0", "0, 3", "3, 3", "2, 2"]
         self.test_grid = Grid(coordinates_list)
     
     def test_init(self):
@@ -33,7 +33,7 @@ class GridTestCase(unittest.TestCase):
         self.test_grid.populate()
         self.assertEqual(self.test_grid.grid, [["10", "", "", "12"],
                                                     ["", "", "", ""],
-                                                    ["", "", "", ""],
+                                                    ["", "", "14", ""],
                                                     ["11", "", "", "13"]])
 
 
